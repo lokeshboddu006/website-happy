@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- 
+  🔐 GEMINI AI SETUP INSTRUCTIONS:
+  
+  To connect the Gemini AI backend:
+  
+  1. Go to GitHub Repository Settings
+  2. Navigate to: Secrets and variables > Actions
+  3. Click "New repository secret"
+  4. Name: GEMINI_API_KEY
+  5. Value: [Paste your NEW Gemini API key here - NOT the exposed one!]
+  6. Click "Add secret"
+  
+  ⚠️ SECURITY: Get a NEW API key from https://aistudio.google.com/app/apikey
+  The old key shared in chat should be REVOKED immediately!
+  310
+  
+  Once added, every push will trigger the AI script in GitHub Actions.
+  Check the "Actions" tab to see the AI responses!
+--<!-- HUGGING FACE INFERENCE API SETUP (FREE - NO API KEY NEEDED!) -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Arya! ❤️</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #fff5f7;
+            overflow-x: hidden;
+        }
+        .font-love { font-family: 'Dancing Script', cursive; }
+        
+        .fade-in { animation: fadeIn 1.5s ease-out forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .heart-float {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            color: #ffb6c1;
+            animation: float 10s linear infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 182, 193, 0.3);
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: #ffb6c1;
+        }
+
+        .quiz-option:hover {
+            transform: scale(1.02);
+            background: #fff1f2;
+        }
+
+        .candle-flame {
+            width: 15px;
+            height: 25px;
+            background: #ff9d00;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            margin: 0 auto;
+            animation: flicker 0.1s infinite alternate;
+        }
+        @keyframes flicker {
+            0% { transform: scale(1); opacity: 0.9; }
+            100% { transform: scale(1.1); opacity: 1; }
+        }
+
+        .shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Background Hearts -->
+    <div id="heart-bg"></div>
+
+    <!-- Main Container -->
+    <main id="app" class="relative z-10 min-h-screen flex flex-col items-center justify-center p-4">
+        
+        <!-- SECTION 0: The Hook (Engagement Start) -->
+        <section id="section-0" class="fade-in text-center space-y-6 max-w-md">
+            <h1 class="text-5xl font-love text-pink-600">Hey Arya(My Baby Girl)....</h1>
+            <p class="text-lg text-gray-700">Today is all about you my baby girl mylove your smile and all the love we share mera baccha. On your special day, I just want you to feel how deeply you’re loved my baby. Happy Birthday my love and thank you so much for making my world brighter every day. I love you forever and ever my love.</p>
+            <button onclick="nextSection(1)" class="px-8 py-3 bg-pink-500 text-white rounded-full font-bold shadow-lg hover:bg-pink-600 transition-all transform hover:scale-110">
+                Unlock My Surprise 💖
+            </button>
+        </section>
+
+        <!-- SECTION 1: Intro Message -->
+        <section id="section-1" class="hidden fade-in text-center space-y-8 max-w-2xl px-4">
+            <h2 class="text-6xl font-love text-pink-500">Happy Birthday, My Love!</h2>
+            <div class="glass p-8 rounded-3xl shadow-xl leading-relaxed text-xl italic">
+                "Today isn't just another day. It's the anniversary of the day the world became a billion times brighter because you were born. I wanted to take you on a trip down memory lane..."
+            </div>
+            <button onclick="nextSection(2)" class="px-8 py-3 border-2 border-pink-400 text-pink-500 rounded-full font-bold hover:bg-pink-50 transition-all">
+                Let's Start the Journey →
+            </button>
+        </section>
+
+        <!-- SECTION 2: The Timeline -->
+        <section id="section-2" class="hidden fade-in w-full max-w-4xl px-4 py-12">
+            <h2 class="text-4xl font-love text-center text-pink-600 mb-12">Our Beautiful Timeline</h2>
+            <div class="relative">
+                <div class="timeline-line"></div>
+                
+                <div class="space-y-12">
+                    <!-- Event 1 -->
+                    <div class="flex flex-col md:flex-row items-center justify-between w-full">
+                        <div class="w-full md:w-5/12 glass p-6 rounded-2xl shadow-sm text-right">
+                            <h3 class="font-bold text-pink-500">The Day We Met</h3>
+                            <p class="text-sm text-gray-500">A New Spark</p>
+                            <p class="mt-2 text-gray-600">I still remember the first day I saw you. I never imagined that moment would turn into us. From that day to today everything slowly changed and somehow it all felt right...</p>
+                             <p class="mt-2 text-gray-600">We didn’t fall in love all at once. It happened day by day through endless Snapchat talks late-night conversations shared smiles and understanding each other more with time.</p>
+                        </div>
+                        </div>
+                        <div class="z-20 bg-pink-500 w-4 h-4 rounded-full border-4 border-white shadow my-4 md:my-0"></div>
+                        <div class="w-full md:w-5/12"></div>
+                    </div>
+
+                    <!-- Event 2 -->
+                    <div class="flex flex-col md:flex-row-reverse items-center justify-between w-full">
+                        <div class="w-full md:w-5/12 glass p-6 rounded-2xl shadow-sm">
+                            <h3 class="font-bold text-pink-500">Our First Date</h3>
+                            <p class="text-sm text-gray-500">A Day to Remember</p>
+                            <p class="mt-2 text-gray-600">Everything felt so natural. I didn't want the night to end. You looked absolutely stunning.</p>
+                        </div>
+                        <div class="z-20 bg-pink-500 w-4 h-4 rounded-full border-4 border-white shadow my-4 md:my-0"></div>
+                        <div class="w-full md:w-5/12"></div>
+                    </div>
+
+
+                    <!-- Event 3 -->
+                    <div class="flex flex-col md:flex-row items-center justify-between w-full">
+                        <div class="w-full md:w-5/12 glass p-6 rounded-2xl shadow-sm text-right">
+                             <h3 class="font-bold text-pink-500">Stolen Moments — Made Possible by Love</h3>
+                            <p class="text-sm text-gray-500">Moments to remember</p>
+                            <p class="mt-2 text-gray-600">Every time you came to your relative’s house and found a way to see me, my heart felt fuller.</p>
+                             <p class="mt-2 text-gray-600"> Those secret outside meetings, made possible by your friends like Saiee...,etc and many others who made those moments possible, and they’ll always hold a special place in our story. </p>
+                        </div>
+                        <div class="z-20 bg-pink-500 w-4 h-4 rounded-full border-4 border-white shadow my-4 md:my-0"></div>
+                        <div class="w-full md:w-5/12"></div>
+                    </div>
+
+                    <!-- Event 4 -->
+                     <div class="flex flex-col md:flex-row-reverse items-center justify-between w-full">
+                        <div class="w-full md:w-5/12 glass p-6 rounded-2xl shadow-sm">
+                            <h3 class="font-bold text-pink-500">Falling In Love</h3>
+                            <p class="text-sm text-gray-500">The Best Decision Ever</p>
+                            <p class="mt-2 text-gray-600">Distance tried to test us, but love held us closer. Five years of long distance, trust, patience, and effort and still, we chose each other every single day.</p>
+                            <p class="mt-2 text-gray-600">This isn’t just a story of how we met. It’s a journey of how we stayed how we grew and how we’re still here—together in love and holding on to forever.</p>
+                        </div>
+                        <div class="z-20 bg-pink-500 w-4 h-4 rounded-full border-4 border-white shadow my-4 md:my-0"></div>
+                        <div class="w-full md:w-5/12"></div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="text-center mt-12">
+                <button onclick="nextSection(3)" class="px-8 py-3 bg-pink-500 text-white rounded-full font-bold shadow-lg">
+                    There's More... Keep Going!
+                </button>
+            </div>
+        </section>
+
+        <!-- SECTION 3: Reasons I Love You (Interactive Cards) -->
+        <section id="section-3" class="hidden fade-in text-center max-w-4xl px-4">
+            <h2 class="text-4xl font-love text-pink-600 mb-8">Reasons Why You're My Favorite Human</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" id="reasons-grid">
+                <!-- JS will inject cards here -->
+            </div>
+            <div id="reasons-footer" class="hidden mt-12">
+                <button onclick="nextSection(4)" class="px-8 py-3 bg-pink-500 text-white rounded-full font-bold shadow-lg">
+                    You've Found All My Reasons! Now for a Quiz...
+                </button>
+            </div>
+        </section>
+
+        <!-- SECTION 4: The Couple Quiz -->
+        <section id="section-4" class="hidden fade-in text-center max-w-lg w-full px-4">
+            <div class="glass p-8 rounded-3xl shadow-xl">
+                <h2 class="text-3xl font-love text-pink-600 mb-6">How Well Do You Know Us?</h2>
+                <div id="quiz-container">
+                    <p id="quiz-question" class="text-xl mb-6 font-semibold"></p>
+                    <div id="quiz-options" class="space-y-4"></div>
+                </div>
+                <div id="quiz-feedback" class="mt-4 h-8 font-bold"></div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: AI LOVE LAB (GEMINI API) -->
+        <section id="section-5" class="hidden fade-in text-center max-w-2xl px-4">
+            <h2 class="text-4xl font-love text-pink-600 mb-6">AI Love Lab ✨</h2>
+            <div class="glass p-8 rounded-3xl shadow-xl space-y-8">
+                
+                <!-- Feature 1: Memory Alchemist -->
+                <div class="space-y-4 text-left border-b border-pink-100 pb-8">
+                    <h3 class="text-xl font-bold text-pink-500 flex items-center gap-2">
+                        The Memory Alchemist ✨
+                    </h3>
+                    <p class="text-sm text-gray-500">Enter a short memory of us, and I'll turn it into a poem.</p>
+                    <textarea id="ai-memory-input" placeholder="e.g. Walking in the rain, sharing a pizza..." class="w-full p-4 rounded-xl border-2 border-pink-100 outline-none focus:border-pink-300 h-24 resize-none text-sm"></textarea>
+                    <button id="ai-memory-btn" onclick="weaveMemoryPoem()" class="w-full py-3 bg-pink-500 text-white rounded-xl font-bold shadow-lg hover:bg-pink-600 transition-all">
+                        Weave Magic ✨
+                    </button>
+                    <div id="ai-memory-result" class="hidden mt-4 p-4 bg-pink-50 rounded-xl italic text-gray-700 leading-relaxed border border-pink-100 text-sm"></div>
+                </div>
+
+                <!-- Feature 2: Future Visionary -->
+                <div class="space-y-4 text-left">
+                    <h3 class="text-xl font-bold text-pink-500 flex items-center gap-2">
+                        The Future Visionary ✨
+                    </h3>
+                    <p class="text-sm text-gray-500">Where do you want to go with me? I'll describe our future there.</p>
+                    <input type="text" id="ai-future-input" placeholder="e.g. Traveling to Paris, our first home..." class="w-full p-4 rounded-xl border-2 border-pink-100 outline-none focus:border-pink-300 text-sm">
+                    <button id="ai-future-btn" onclick="predictFutureVision()" class="w-full py-3 bg-pink-400 text-white rounded-xl font-bold shadow-lg hover:bg-pink-500 transition-all">
+                        Gaze into Tomorrow ✨
+                    </button>
+                    <div id="ai-future-result" class="hidden mt-4 p-4 bg-blue-50 rounded-xl italic text-gray-700 leading-relaxed border border-blue-100 text-sm"></div>
+                </div>
+
+            </div>
+            <button onclick="nextSection(6)" class="mt-8 px-8 py-3 border-2 border-pink-400 text-pink-500 rounded-full font-bold hover:bg-pink-50 transition-all">
+                Onto the Games! →
+            </button>
+        </section>
+
+        <!-- SECTION 6: Heart Catcher Mini Game -->
+        <section id="section-6" class="hidden fade-in text-center w-full max-w-2xl">
+            <h2 class="text-3xl font-love text-pink-600 mb-2">Catch My Love!</h2>
+            <p class="mb-4 text-gray-500">Catch 10 hearts to see my hidden letter.</p>
+            <div id="game-canvas" class="relative w-full h-80 bg-white rounded-2xl border-2 border-pink-100 overflow-hidden cursor-crosshair">
+                <div id="game-score" class="absolute top-2 left-4 font-bold text-pink-500 text-2xl">0 / 10</div>
+            </div>
+        </section>
+
+        <!-- SECTION 7: The Ultimate Letter -->
+        <section id="section-7" class="hidden fade-in text-center max-w-2xl px-4">
+            <div class="glass p-10 rounded-3xl shadow-2xl relative overflow-hidden">
+                <div class="absolute -top-10 -right-10 w-32 h-32 bg-pink-100 rounded-full blur-3xl opacity-50"></div>
+                <h2 class="text-4xl font-love text-pink-600 mb-6">To My Dearest Arya,</h2>
+                <div id="typewriter" class="text-left text-lg leading-relaxed space-y-4 text-gray-700"></div>
+                <button id="final-btn" onclick="nextSection(8)" class="hidden mt-8 px-8 py-3 bg-pink-500 text-white rounded-full font-bold shadow-lg animate-bounce">
+                    The Final Surprise 🎂
+                </button>
+            </div>0219
+          
+        </section>
+
+        <!-- SECTION 8: The Virtual Cake -->
+        <section id="section-8" class="hidden fade-in text-center space-y-8">
+            <h2 class="text-5xl font-love text-pink-600">Happy Birthday My LOVE!</h2>
+            <div class="relative inline-block mt-20">
+                <div class="w-48 h-32 bg-pink-200 rounded-t-xl relative border-b-8 border-pink-300">
+                    <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 flex space-x-4">
+                        <div class="candle w-4 h-12 bg-yellow-100 rounded-t-sm relative cursor-pointer" onclick="blowCandle(this)">
+                            <div class="candle-flame"></div>
+                        </div>
+                        <div class="candle w-4 h-12 bg-blue-100 rounded-t-sm relative cursor-pointer" onclick="blowCandle(this)">
+                            <div class="candle-flame"></div>
+                        </div>
+                        <div class="candle w-4 h-12 bg-pink-100 rounded-t-sm relative cursor-pointer" onclick="blowCandle(this)">
+                            <div class="candle-flame"></div>
+                        </div>
+                    </div>
+                    <div class="absolute top-0 w-full flex justify-around">
+                        <div class="w-8 h-4 bg-white rounded-full -mt-2"></div>
+                        <div class="w-8 h-4 bg-white rounded-full -mt-2"></div>
+                        <div class="w-8 h-4 bg-white rounded-full -mt-2"></div>
+                    </div>
+                </div>
+                <p class="mt-12 text-gray-500 italic">Click the candles to blow them out my baby...</p>
+            </div>
+            <div id="final-message" class="hidden space-y-6">`
+                <h3 class="text-4xl font-love text-pink-600">I Love You So Much Arya!</h3>
+                <p class="text-xl">Forever and always, your favorite person - LUCKY. ❤️</p>
+                <div class="flex justify-center space-x-4">
+                    <button onclick="location.reload()" class="px-6 py-2 bg-gray-200 rounded-full">Replay the Love </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    
+</body>
+<script>
+const groqApiKey = "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"; // Free Groq API key
+        let currentSection = 0;
+        const reasons = [
+            "Your beautiful smile", "How you understand me without words", "Your kind heart",
+            "The future I see with you", "How you make distance feel smaller", "The way you support me",
+            "Your amazing eyes", "How you handle everything", "Just being YOU"
+        ];
+        let revealedReasons = 0;
+
+        const quizData = [
+            { q: "Where was our very first date?", a: ["Cafe", "Park", "Cinema", "Beach"], correct: 0 },
+            { q: "What is my favorite thing about you?", a: ["Your smile", "Your brains", "Your heart", "All of the above"], correct: 3 },
+            { q: "Which month did we start dating?", a: ["June", "December", "September", "January"], correct: 1}
+        ];
+        let currentQuizIdx = 0;
+
+        // GROQ API - FASTEST FREE AI (Sub-second responses)
+        async function callGroq(prompt, systemInstruction) {
+            const url = "https://api.groq.com/openai/v1/chat/completions";
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${groqApiKey}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        model: "mixtral-8x7b-32768",
+                        messages: [
+                            { role: "system", content: systemInstruction },
+                            { role: "user", content: prompt }
+                        ],
+                        max_tokens: 300,
+                        temperature: 0.7
+                    })
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.error?.message || "API Error");
+                }
+
+                const data = await response.json();
+                return data.choices[0]?.message?.content || "Our love transcends words. ❤️";
+            } catch (error) {
+                console.error("Groq API Error:", error);
+                throw error;
+            }
+        }
+
+        async function weaveMemoryPoem() {
+            const input = document.getElementById('ai-memory-input').value.trim();
+            if (!input) return;
+            const btn = document.getElementById('ai-memory-btn');
+            const result = document.getElementById('ai-memory-result');
+
+            btn.disabled = true;
+            btn.innerText = "✨ Weaving magic...";
+            result.classList.remove('hidden');
+            result.innerHTML = `<div class="h-12 shimmer rounded animate-pulse"></div>`;
+
+            try {
+                const startTime = Date.now();
+                const poem = await Promise.race([
+                    callGroq(
+                        `Memory: "${input}"`,
+                        "You are a romantic poet. Transform the provided memory into a short, deeply sweet, and rhythmic poem for Arya. Keep it under 50 words. Be very romantic."
+                    ),
+                    new Promise((_, reject) => 
+                        setTimeout(() => reject(new Error("Response took too long")), 10000)
+                    )
+                ]);
+
+                const duration = ((Date.now() - startTime) / 1000).toFixed(2);
+                result.innerHTML = `<p class="italic">${poem}</p><p class="text-xs text-gray-400 mt-2">⚡ Generated in ${duration}s</p>`;
+            } catch (error) {
+                result.innerHTML = `
+                <p class="text-sm text-gray-600 mt-2">The magic is recharging baby... but I still love every moment with you, Arya. ❤️</p>`;
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "Weave Magic ✨";
+            }
+        }
+
+        async function predictFutureVision() {
+            const input = document.getElementById('ai-future-input').value.trim();
+            if (!input) return;
+            const btn = document.getElementById('ai-future-btn');
+            const result = document.getElementById('ai-future-result');
+
+            btn.disabled = true;
+            btn.innerText = "🔮 Consulting the stars...";
+            result.classList.remove('hidden');
+            result.innerHTML = `<div class="h-12 shimmer rounded animate-pulse"></div>`;
+
+            try {
+                const startTime = Date.now();
+                const vision = await Promise.race([
+                    callGroq(
+                        `Dream: "${input}"`,
+                        "You are a romantic visionary. Describe a beautiful future scene where the user and Arya are living out the provided dream together. Make it feel warm, inevitable, and lovely. Under 60 words. Start directly with the scene."
+                    ),
+                    new Promise((_, reject) => 
+                        setTimeout(() => reject(new Error("Response took too long")), 10000)
+                    )
+                ]);
+
+                const duration = ((Date.now() - startTime) / 1000).toFixed(2);
+                result.innerHTML = `<p class="italic">${vision}</p><p class="text-xs text-gray-400 mt-2">⚡ Generated in ${duration}s</p>`;
+            } catch (error) {
+                result.innerHTML = `
+                <p class="text-sm text-gray-600 mt-2">Our future is too bright to describe in words right now. I just know it's with you my baby girl. ❤️</p>`;
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "Gaze into Tomorrow ✨";
+            }
+        }
+
+        function initBackground() {
+            const bg = document.getElementById('heart-bg');
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart-float';
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDelay = Math.random() * 10 + 's';
+                heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                bg.appendChild(heart);
+            }
+        }
+
+        function nextSection(num) {
+            document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
+            document.getElementById(`section-${num}`).classList.remove('hidden');
+            currentSection = num;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            if (num === 3) loadReasons();
+            if (num === 4) loadQuiz();
+            if (num === 6) initGame();
+            if (num === 7) typeLetter();
+        }
+
+        function loadReasons() {
+            const grid = document.getElementById('reasons-grid');
+            grid.innerHTML = '';
+            reasons.forEach((text, i) => {
+                const card = document.createElement('div');
+                card.className = 'glass p-8 rounded-2xl cursor-pointer hover:bg-pink-100 transition-all flex items-center justify-center min-h-[120px] text-pink-300';
+                card.innerHTML = `<span class="text-2xl">?</span>`;
+                card.onclick = function() {
+                    if (this.classList.contains('revealed')) return;
+                    this.innerHTML = `<p class="font-semibold text-pink-600 animate-pulse">${text}</p>`;
+                    this.classList.add('revealed', 'bg-white');
+                    this.classList.remove('text-pink-300');
+                    revealedReasons++;
+                    if (revealedReasons === reasons.length) {
+                        document.getElementById('reasons-footer').classList.remove('hidden');
+                    }
+                };
+                grid.appendChild(card);
+            });
+        }
+
+        function loadQuiz() {
+            const data = quizData[currentQuizIdx];
+            const feedback = document.getElementById('quiz-feedback');
+            feedback.innerText = '';
+            document.getElementById('quiz-question').innerText = data.q;
+            const optionsDiv = document.getElementById('quiz-options');
+            optionsDiv.innerHTML = '';
+
+            data.a.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'quiz-option w-full p-4 border-2 border-pink-100 rounded-xl transition-all font-medium';
+                btn.innerText = opt;
+                btn.onclick = () => {
+                    if (i === data.correct) {
+                        feedback.innerText = "Correct baby! ❤️";
+                        feedback.className = "mt-4 font-bold text-green-500";
+                        setTimeout(() => {
+                            currentQuizIdx++;
+                            if (currentQuizIdx < quizData.length) loadQuiz();
+                            else nextSection(5);
+                        }, 1000);
+                    } else {
+                        feedback.innerText = "Oyy you have to give correct ans, baby! 😘";
+                        feedback.className = "mt-4 font-bold text-red-400";
+                    }
+                };
+                optionsDiv.appendChild(btn);
+            });
+        }
+
+        let score = 0;
+        function initGame() {
+            const canvas = document.getElementById('game-canvas');
+            const scoreDisplay = document.getElementById('game-score');
+            score = 0; scoreDisplay.innerText = "0 / 10";
+
+            const spawnHeart = () => {
+                if (currentSection !== 6 || score >= 10) return;
+                const heart = document.createElement('div');
+                heart.innerHTML = '❤️';
+                heart.className = 'absolute cursor-pointer text-3xl select-none transition-all duration-300 hover:scale-150';
+                heart.style.left = Math.random() * (canvas.clientWidth - 40) + 'px';
+                heart.style.top = Math.random() * (canvas.clientHeight - 40) + 'px';
+
+                heart.onclick = () => {
+                    score++;
+                    scoreDisplay.innerText = `${score} / 10`;
+                    heart.remove();
+                    confetti({ particleCount: 10, spread: 30, origin: { y: 0.6 }, colors: ['#ff69b4'] });
+                    if (score >= 10) setTimeout(() => nextSection(7), 500);
+                };
+
+                canvas.appendChild(heart);
+                setTimeout(() => { if (heart.parentNode) heart.remove(); }, 2000);
+                if (score < 10) setTimeout(spawnHeart, 800);
+            };
+            spawnHeart();
+        }
+
+        function typeLetter() {
+            const text = "Arya, writing this was the easiest thing I've ever done because every word comes straight from my heart. \n\nYou are my Love Baby , my greatest adventure, and my favorite place to be. Thank you for choosing me every single day my Love. \n\nI hope this year brings you as much joy as you bring to everyone around you. I can't wait to make a million more memories with you. \n\nHappy Birthday My Love.";
+            const container = document.getElementById('typewriter');
+            container.innerHTML = "";
+            let i = 0;
+            function type() {
+                if (i < text.length) {
+                    container.innerHTML += text.charAt(i) === '\n' ? '<br>' : text.charAt(i);
+                    i++;
+                    setTimeout(type, 50);
+                } else {
+                    document.getElementById('final-btn').classList.remove('hidden');
+                }
+            }
+            type();
+        }
+
+        let candlesBlown = 0;
+        function blowCandle(candle) {
+            const flame = candle.querySelector('.candle-flame');
+            if (flame.style.display === 'none') return;
+            flame.style.display = 'none';
+            candlesBlown++;
+            confetti({ particleCount: 50, spread: 70, origin: { y: 0.7 } });
+            if (candlesBlown === 3) {
+                setTimeout(() => {
+                    document.getElementById('final-message').classList.remove('hidden');
+                    document.getElementById('final-message').classList.add('fade-in');
+                    confetti({ particleCount: 200, spread: 160, origin: { y: 0.6 } });
+                }, 1000);
+            }
+        }
+
+        window.onload = initBackground;
+</script>
+</html>
+
+
+
